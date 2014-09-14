@@ -4,7 +4,7 @@ defmodule ZteCdmaParser.Mixfile do
   def project do
     [app: :zte_cdma_parser,
      version: "0.0.1",
-     elixir: "~> 0.15.1",
+     elixir: "~> 1.0.0",
      deps: deps]
   end
 
