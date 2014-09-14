@@ -10,15 +10,14 @@ defmodule ZteCdmaCdr do
       [] ->
         fields
       _ ->
-        [[field_name, length] | rest_specs] = specs
-        [new_fields, rest_line] = process_field(line, field_name, length, fields)
+        [[field_name, field_length] | rest_specs] = specs
+        [new_fields, rest_line] = process_field(line, field_name, field_length, fields)
         process_line(rest_line, rest_specs, new_fields)
     end
   end
 
-  defp process_field(line, field_name, length, fields) do
-    field_size = String.to_integer(length)
-    << field :: size(field_size) - binary, rest :: binary >> = line
+  defp process_field(line, field_name, field_length, fields) do
+    << field :: size(field_length) - binary, rest :: binary >> = line
     fields = HashDict.put fields, field_name, String.strip(field)
     [fields, rest]
   end

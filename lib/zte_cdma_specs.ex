@@ -20,6 +20,6 @@ defmodule ZteCdmaSpecs do
 
   def process_spec(data, specs) do
     [field_name, length] = String.split(String.strip(data), ", ")
-    specs ++ [[field_name, length]]
+    specs ++ [[field_name, String.to_integer(length)]]
   end
 end
