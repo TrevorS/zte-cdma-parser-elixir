@@ -1,7 +1,7 @@
 defmodule ZteCdmaParser do
 
-  def parse(file_name, specs_name) do
-    specs = ZteCdmaSpecs.parse_specs(specs_name)
+  def parse(file_name) do
+    specs = ZteCdmaSpecs.load_specs
     records = []
     case File.open(file_name, [:read, :compressed]) do
       {:ok, file} ->

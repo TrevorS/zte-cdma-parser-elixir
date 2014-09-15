@@ -1,12 +1,16 @@
 defmodule ZteCdmaSpecs do
 
-  def parse_specs(file_name) do
+  def load_specs do
+    load_specs_config |> parse_specs
+  end
+
+  defp parse_specs(file_name) do
     {_result, file} = File.open(file_name, [:read, :utf8])
     specs = []
     process_line(file, specs)
   end
 
-  def process_line(file, specs) do
+  defp process_line(file, specs) do
     data = IO.read(file, :line)
     case data do
       :eof ->
@@ -18,8 +22,15 @@ defmodule ZteCdmaSpecs do
     end
   end
 
-  def process_spec(data, specs) do
+  defp process_spec(data, specs) do
     [field_name, length] = String.split(String.strip(data), ", ")
     specs ++ [[field_name, String.to_integer(length)]]
+  end
+
+  defp load_specs_config do
+    use Mix.Config
+    Mix.Config.import_config("../config/config.exs")
+      |> Keyword.get(:zte_cdma_parser)
+      |> Keyword.get(:specs_filename)
   end
 end
